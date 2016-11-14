@@ -15,6 +15,21 @@ router.post("/", function (req, res) {
     logger.info("Body", req.body);
     res.status(200);
     res.end();
+
+    var message = req.body;
+    fetch("http://ec2-54-238-245-232.ap-northeast-1.compute.amazonaws.com:3000/api/line/message", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(message),
+    })
+    .then(function (_res) {
+        logger.info("Successfully sent to finchat", _res.status);
+    })
+    .catch(function (error) {
+        logger.info("Failed to send to finchat", error);
+    });
 });
 
 router.post("/message", function (req, res) {
