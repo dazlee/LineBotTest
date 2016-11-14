@@ -21,11 +21,19 @@ app.use(session({
     saveUninitialized: true,
 }));
 
+
+var fs = require("fs");
 app.get("/", function (req, res) {
     res.status(200).write("home");
     res.end();
 });
 app.use("/line", require("./line"));
+app.get("/log", function (req, res) {
+    res.writeHead(200, {
+        'Content-Type': 'text/plain'
+    });
+    fs.createReadStream("./node.log").pipe(res);
+});
 
 // catch 404 and handle it
 app.use(function (req, res, next) {
