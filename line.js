@@ -3,7 +3,6 @@ var router = express.Router();
 var logger = require("./logger");
 
 router.get("/", function (req, res) {
-    logger.info(req.headers);
     res.status(200).write("test");
     res.end();
 });
