@@ -36,8 +36,8 @@ router.post("/", function (req, res) {
             ],
         }),
     })
-    .then(function (res) {
-        logger.info("Success", res.status);
+    .then(function (_res) {
+        logger.info("Success", _res.status);
     })
     .catch(function (error) {
         logger.info("Error", error);
