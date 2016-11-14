@@ -3,7 +3,7 @@ const debug = require('debug')('cha:server');
 const http = require("http");
 
 
-var port = 3000;
+var port = process.env.PORT || 3000;
 app.set("port", port);
 
 var server = http.createServer(app);
