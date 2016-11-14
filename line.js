@@ -39,7 +39,7 @@ router.post("/", function (req, res) {
     .then(function (res) {
         logger.info("Success");
     })
-    .then(function (error) {
+    .catch(function (error) {
         logger.info("Error", error);
     });
 });
