@@ -15,6 +15,10 @@ router.post("/", function (req, res) {
     logger.info("Body", req.body);
     res.status(200);
     res.end();
+});
+
+router.post("/message", function (req, res) {
+    var message = req.body.message;
 
     fetch("https://api.line.me/v2/bot/message/push", {
         method: "POST",
@@ -27,17 +31,15 @@ router.post("/", function (req, res) {
             messages: [
                 {
                     type: "text",
-                    text: "song lala",
-                },
-                {
-                    type: "text",
-                    text: "and you?",
+                    text: message,
                 },
             ],
         }),
     })
     .then(function (_res) {
         logger.info("Success", _res.status);
+        res.status(200);
+        res.end();
     })
     .catch(function (error) {
         logger.info("Error", error);
