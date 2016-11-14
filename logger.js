@@ -16,7 +16,7 @@ const logger =  new winston.Logger({
             colorize: true
         }),
         new (winston.transports.File)({
-            filename: "/var/log/node.log",
+            filename: "./node.log",
             level: 'info',
             handleExceptions: true,
             json: true,
