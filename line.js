@@ -20,7 +20,7 @@ router.post("/", function (req, res) {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": TOKEN,
+            "Authorization": "Bearer " + TOKEN,
         },
         body: JSON.stringify({
             to: "U6cb7b1eff92ce9a0805f4b8fa50af36b",
