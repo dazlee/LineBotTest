@@ -21,7 +21,9 @@ router.post("/", function (req, res) {
     var userId = message.source.userId;
     fetch("https://api.line.me/v2/bot/profile/" + userId, {
         method: "GET",
-        body: JSON.stringify(message),
+        headers: {
+            "Authorization": "Bearer " + TOKEN,
+        },
     })
     .then(function (_res) {
         logger.info("user profile", _res.json());
