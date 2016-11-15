@@ -27,7 +27,7 @@ router.post("/", function (req, res) {
         logger.info("user profile", _res.json());
     })
     .catch(function (error) {
-        console.log(error);
+        logger.info("error", error);
     });
 
     fetch("http://ec2-54-238-245-232.ap-northeast-1.compute.amazonaws.com:3000/api/line/message", {
