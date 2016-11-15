@@ -26,7 +26,7 @@ router.post("/", function (req, res) {
         },
     })
     .then(function (_res) {
-        logger.info("user profile", _res.json());
+        logger.info("user profile", _res);
     })
     .catch(function (error) {
         logger.info("error", error);
