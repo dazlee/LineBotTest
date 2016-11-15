@@ -17,6 +17,19 @@ router.post("/", function (req, res) {
     res.end();
 
     var message = req.body;
+
+    var userId = message.source.userId;
+    fetch("https://api.line.me/v2/bot/profile/" + userId, {
+        method: "GET",
+        body: JSON.stringify(message),
+    })
+    .then(function (_res) {
+        logger.info("user profile", _res.json());
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+
     fetch("http://ec2-54-238-245-232.ap-northeast-1.compute.amazonaws.com:3000/api/line/message", {
         method: "POST",
         headers: {
