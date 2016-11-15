@@ -18,7 +18,7 @@ router.post("/", function (req, res) {
 
     var message = req.body;
 
-    var userId = message.source.userId;
+    var userId = message.events[0].source.userId;
     fetch("https://api.line.me/v2/bot/profile/" + userId, {
         method: "GET",
         headers: {
