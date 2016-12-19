@@ -34,7 +34,8 @@ router.post("/", function (req, res) {
     .catch(function (error) {
         logger.info("error", error);
     });
-    console.log(message);
+    console.log(message[0].source);
+    console.log(message[0].message);
 
     fetch("http://ec2-54-238-245-232.ap-northeast-1.compute.amazonaws.com:3000/api/line/message", {
         method: "POST",
