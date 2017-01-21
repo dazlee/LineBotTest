@@ -109,19 +109,23 @@ function callSendAPI(messageData) {
     // json: messageData
 	body: JSON.stringify(messageData)
 
-  }, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      var recipientId = body.recipient_id;
-      var messageId = body.message_id;
+})
+.then(function (res) {
+	logger.info("Success", res.status);
 
-      logger.info("Successfully sent generic message with id %s to recipient %s",
-        messageId, recipientId);
-    } else {
-      logger.error("Unable to send message.");
-      logger.error(response);
-      logger.error(error);
-    }
-  });
+	// var recipientId = body.recipient_id;
+	// var messageId = body.message_id;
+
+	// logger.info("Successfully sent generic message with id %s to recipient %s",
+	//   messageId, recipientId);
+	// res.status(200);
+ //  	res.end();
+})
+.catch(function (error) {
+	logger.error("Unable to send message.");
+	logger.error(response);
+	logger.error(error);
+});
 }
 
 module.exports = router;
