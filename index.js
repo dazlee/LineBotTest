@@ -28,6 +28,7 @@ app.get("/", function (req, res) {
     res.end();
 });
 app.use("/line", require("./line"));
+app.use("/fb", require("./fb"));
 app.get("/log", function (req, res) {
     res.writeHead(200, {
         'Content-Type': 'text/plain'
