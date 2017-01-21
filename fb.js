@@ -99,11 +99,15 @@ function sendTextMessage(recipientId, messageText) {
 }
 function callSendAPI(messageData) {
 	logger.info("sending message", messageData);
-  request({
-    uri: 'https://graph.facebook.com/v2.6/me/messages',
-    qs: { access_token: PAGE_ACCESS_TOKEN },
+  fetch({
+    uri: 'https://graph.facebook.com/v2.6/me/messages?access_token=' + PAGE_ACCESS_TOKEN,
+    // qs: { access_token: PAGE_ACCESS_TOKEN },
     method: 'POST',
-    json: messageData
+	headers: {
+		"Content-Type": "application/json"
+	},
+    // json: messageData
+	body: JSON.stringify(messageData)
 
   }, function (error, response, body) {
     if (!error && response.statusCode == 200) {
