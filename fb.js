@@ -7,7 +7,7 @@ const TOKEN = "this_is_my_token";
 const PAGE_TOKEN = "EAAYwL34E0nQBANanGmZCpPRXOqlnff8rklrHQtzyZAeEgTORBdMp06U8A8QphJ8D0MZAzeKZAk1AUXx9XFwJ9r0tJNmZAowmorxrTfP2d7Iw64ecjEQs2UPOwHX3ZAarWrsDqcWs1Rgauutb4iMhiPvEA742v32kp9L2JwavVGBwZDZD";
 router.get("/webhook", (req, res) => {
 	if (req.query['hub.mode'] === 'subscribe' &&
-		req.query['hub.verify_token'] === TOKEN) {
+		req.query['hub.verify_token'] === PAGE_TOKEN) {
 		logger.info("Validating webhook");
 		res.status(200).send(req.query['hub.challenge']);
 	} else {
