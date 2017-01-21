@@ -15,3 +15,5 @@ router.get("/webhook", (req, res) => {
 		res.sendStatus(403);
 	}
 });
+
+module.exports = router;
