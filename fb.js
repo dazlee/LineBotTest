@@ -123,7 +123,6 @@ function callSendAPI(messageData) {
 })
 .catch(function (error) {
 	logger.error("Unable to send message.");
-	logger.error(response);
 	logger.error(error);
 });
 }
