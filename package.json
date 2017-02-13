@@ -4,7 +4,7 @@
   "description": "just to test line bot",
   "main": "index.js",
   "scripts": {
-    "start": "sudo node bin/root.js"
+    "start": "node bin/root.js"
   },
   "dependencies": {
     "babel-core": "^6.5.2",
