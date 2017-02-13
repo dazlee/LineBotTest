@@ -68,7 +68,7 @@ function receivedMessage(event) {
   message.userId = senderID;
   message.type = "text";
   message.content = message.text;
-  sendMessage(message, "fb");
+  sendMessage("fb", message);
 
   // if (messageText) {
   //
