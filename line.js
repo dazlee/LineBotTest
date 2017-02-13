@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var logger = require("./logger");
 var fetch = require("isomorphic-fetch");
+var sendMessage = require("./finchat").sendMessage;
 
 var TOKEN = "Yn+/ek5d90+zpiEybkmnS7Q1smWwDbySR0utAIAlDqeEo/ZFM/1453idLSaRGfYZTqG4Rva0zjZn9wQLcEPUgzo3eu2iuzJzbeP4kgzKYnadcGi/wA0FVC47s4GykoMoTngORAjX/Ou2/Gc/no9YGQdB04t89/1O/w1cDnyilFU=";
 
@@ -34,22 +35,8 @@ router.post("/", function (req, res) {
     .catch(function (error) {
         logger.info("error", error);
     });
-    console.log(message[0].source);
-    console.log(message[0].message);
 
-    fetch("http://ec2-54-238-245-232.ap-northeast-1.compute.amazonaws.com:3000/api/line/message", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(message),
-    })
-    .then(function (_res) {
-        logger.info("Successfully sent to finchat", _res.status);
-    })
-    .catch(function (error) {
-        logger.info("Failed to send to finchat", error);
-    });
+	sendMessage("line", message);
 });
 
 router.post("/message", function (req, res) {
