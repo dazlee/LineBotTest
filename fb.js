@@ -64,21 +64,25 @@ function receivedMessage(event) {
   var messageText = message.text;
   var messageAttachments = message.attachments;
 
-  if (messageText) {
+  message.userId = senderID;
+  message.type = "text";
+  sendMessage(message, "fb");
 
-    // If we receive a text message, check to see if it matches a keyword
-    // and send back the example. Otherwise, just echo the text we received.
-    switch (messageText) {
-      case 'generic':
-        sendGenericMessage(senderID);
-        break;
-
-      default:
-        sendTextMessage(senderID, messageText);
-    }
-  } else if (messageAttachments) {
-    sendTextMessage(senderID, "Message with attachment received");
-  }
+  // if (messageText) {
+  //
+  //   // If we receive a text message, check to see if it matches a keyword
+  //   // and send back the example. Otherwise, just echo the text we received.
+  //   switch (messageText) {
+  //     case 'generic':
+  //       sendGenericMessage(senderID);
+  //       break;
+  //
+  //     default:
+  //       sendTextMessage(senderID, messageText);
+  //   }
+  // } else if (messageAttachments) {
+  //   sendTextMessage(senderID, "Message with attachment received");
+  // }
 }
 
 function sendGenericMessage(recipientId, messageText) {

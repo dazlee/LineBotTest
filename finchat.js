@@ -29,7 +29,19 @@ function sendMessageToLine(message) {
     });
 }
 function sendMessageToFB(message) {
-	logger.info("Successfully sent to finchat fb");
+	fetch("http://52.230.18.236:3000/api/social/fb/message", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(message),
+    })
+    .then(function (_res) {
+        logger.info("Successfully sent to finchat", _res.status);
+    })
+    .catch(function (error) {
+        logger.info("Failed to send to finchat", error);
+    });
 }
 
 module.exports = {
