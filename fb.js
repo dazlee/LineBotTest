@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const logger = require("./logger");
 const fetch = require("isomorphic-fetch");
+const sendMessage = require("./finchat").sendMessage;
 
 const TOKEN = "this_is_my_token";
 const PAGE_ACCESS_TOKEN = "EAAYwL34E0nQBANanGmZCpPRXOqlnff8rklrHQtzyZAeEgTORBdMp06U8A8QphJ8D0MZAzeKZAk1AUXx9XFwJ9r0tJNmZAowmorxrTfP2d7Iw64ecjEQs2UPOwHX3ZAarWrsDqcWs1Rgauutb4iMhiPvEA742v32kp9L2JwavVGBwZDZD";
