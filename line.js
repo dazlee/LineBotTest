@@ -40,7 +40,6 @@ router.post("/", function (req, res) {
 });
 
 router.post("/:finchatUserId", function (req, res) {
-    logger.info("Body", req.body);
     res.status(200);
     res.end();
 
@@ -64,6 +63,7 @@ router.post("/:finchatUserId", function (req, res) {
     });
 
 	message.receiverID = req.params.finchatUserId;
+	logger.info("message", message);
 	sendMessage("line", message);
 });
 
