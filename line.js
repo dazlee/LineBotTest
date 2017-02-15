@@ -44,7 +44,6 @@ router.post("/:agentUserId", function (req, res) {
     res.end();
 
     var message = req.body;
-
     var userId = message.events[0].source.userId;
     fetch("https://api.line.me/v2/bot/profile/" + userId, {
         method: "GET",
@@ -56,15 +55,14 @@ router.post("/:agentUserId", function (req, res) {
         return _res.json();
     })
     .then(function (user) {
-        logger.info("user profile", user);
+		message.agentUserId = req.params.agentUserId;
+		message.client = user;
+
+		sendMessage("line", message);
     })
     .catch(function (error) {
         logger.info("error", error);
     });
-
-	message.agentUserId = req.params.agentUserId;
-	logger.info("message", message);
-	sendMessage("line", message);
 });
 
 router.post("/message", function (req, res) {

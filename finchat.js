@@ -1,6 +1,8 @@
 const logger = require("./logger");
 
 function sendMessage(channel, message) {
+	logger.info("to ", channel);
+	logger.info("message ", message);
 	switch (channel) {
 		case "line":
 			sendMessageToLine(message);
