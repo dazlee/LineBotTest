@@ -13,7 +13,6 @@ router.get("/", function (req, res) {
 
 // webhooks
 router.post("/", function (req, res) {
-	logger.info("req", req);
     logger.info("Body", req.body);
     res.status(200);
     res.end();
@@ -37,6 +36,34 @@ router.post("/", function (req, res) {
         logger.info("error", error);
     });
 
+	sendMessage("line", message);
+});
+
+router.post("/:finchatUserId", function (req, res) {
+    logger.info("Body", req.body);
+    res.status(200);
+    res.end();
+
+    var message = req.body;
+
+    var userId = message.events[0].source.userId;
+    fetch("https://api.line.me/v2/bot/profile/" + userId, {
+        method: "GET",
+        headers: {
+            "Authorization": "Bearer " + TOKEN,
+        },
+    })
+    .then(function (_res) {
+        return _res.json();
+    })
+    .then(function (user) {
+        logger.info("user profile", user);
+    })
+    .catch(function (error) {
+        logger.info("error", error);
+    });
+
+	message.receiverID = req.params.finchatUserId;
 	sendMessage("line", message);
 });
 
