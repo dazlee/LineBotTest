@@ -62,6 +62,7 @@ router.post("/:agentUserId", function (req, res) {
 			});
 			reduced.push(promise);
 		}
+		return reduced;
 	}, []);
 	// const userProfilePromises = message.events.map((event) => {
 	// 	return fetch("https://api.line.me/v2/bot/profile/" + event.source.userId, {
