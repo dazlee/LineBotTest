@@ -29,7 +29,6 @@ function sendMessageToLine(message) {
     });
 }
 function sendMessageToFB(message) {
-	console.log("send to fb", message);
 	fetch("http://52.230.18.236:3000/api/social/fb/message", {
         method: "POST",
         headers: {

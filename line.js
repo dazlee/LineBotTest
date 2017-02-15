@@ -13,6 +13,7 @@ router.get("/", function (req, res) {
 
 // webhooks
 router.post("/", function (req, res) {
+	logger.info("req", req);
     logger.info("Body", req.body);
     res.status(200);
     res.end();
