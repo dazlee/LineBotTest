@@ -79,7 +79,7 @@ router.post("/:agentUserId", function (req, res) {
 	Promise.all(userProfilePromises)
 	.then((userProfiles) => {
 		const length = message.events.length;
-		for (let i = 0; i < legnth; i++) {
+		for (let i = 0; i < length; i++) {
 			message.events[i].client = userProfiles[userProfileMap[message.events[i].source.userId]];
 		}
 		message.agentUserId = req.params.agentUserId;
