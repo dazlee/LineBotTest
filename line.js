@@ -39,7 +39,7 @@ router.post("/", function (req, res) {
 	sendMessage("line", message);
 });
 
-router.post("/:finchatUserId", function (req, res) {
+router.post("/:agentUserId", function (req, res) {
     res.status(200);
     res.end();
 
@@ -62,7 +62,7 @@ router.post("/:finchatUserId", function (req, res) {
         logger.info("error", error);
     });
 
-	message.receiverID = req.params.finchatUserId;
+	message.agentUserId = req.params.agentUserId;
 	logger.info("message", message);
 	sendMessage("line", message);
 });
