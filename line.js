@@ -44,25 +44,48 @@ router.post("/:agentUserId", function (req, res) {
     res.end();
 
     var message = req.body;
-    var userId = message.events[0].source.userId;
-    fetch("https://api.line.me/v2/bot/profile/" + userId, {
-        method: "GET",
-        headers: {
-            "Authorization": "Bearer " + TOKEN,
-        },
-    })
-    .then(function (_res) {
-        return _res.json();
-    })
-    .then(function (user) {
+	var userProfileMap = {};
+	message.agentUserId = req.params.agentUserId;
+
+	const userProfilePromises = message.events.reduce((reduced, event) => {
+		const { userId } = event.source;
+		if (!userProfileMap[userId]) {
+			userProfileMap[userId] = reduced.length;
+			const promise = fetch("https://api.line.me/v2/bot/profile/" + event.source.userId, {
+				method: "GET",
+				headers: {
+					"Authorization": "Bearer " + TOKEN,
+				},
+			})
+			.then(function (_res) {
+				return _res.json();
+			});
+			reduced.push(promise);
+		}
+	}, []);
+	// const userProfilePromises = message.events.map((event) => {
+	// 	return fetch("https://api.line.me/v2/bot/profile/" + event.source.userId, {
+	// 		method: "GET",
+	// 		headers: {
+	// 			"Authorization": "Bearer " + TOKEN,
+	// 		},
+	// 	})
+	// 	.then(function (_res) {
+	// 		return _res.json();
+	// 	});
+	// });
+
+	Promise.all(userProfilePromises)
+	.then((userProfiles) => {
+		const length = message.events.length;
+		for (let i = 0; i < legnth; i++) {
+			message.events[i].client = userProfiles[userProfileMap[message.events[i].source.userId]];
+		}
 		message.agentUserId = req.params.agentUserId;
 		message.client = user;
 
 		sendMessage("line", message);
-    })
-    .catch(function (error) {
-        logger.info("error", error);
-    });
+	});
 });
 
 router.post("/message", function (req, res) {
