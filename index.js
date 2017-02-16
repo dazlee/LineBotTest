@@ -7,10 +7,10 @@ const cons = require('consolidate');
 const session = require('express-session');
 const flash = require("connect-flash");
 
-app.set('views', path.join(__dirname, '../views'));
+app.set('views', path.join(__dirname, './views'));
 app.set('view engine', 'dust');
 app.engine('dust', cons.dust);
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, './public')));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -29,6 +29,7 @@ app.get("/", function (req, res) {
 });
 app.use("/line", require("./line"));
 app.use("/fb", require("./fb"));
+app.use("/image", require("./image"));
 app.get("/log", function (req, res) {
     res.writeHead(200, {
         'Content-Type': 'text/plain'

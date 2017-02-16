@@ -21,6 +21,7 @@
     "isomorphic-fetch": "^2.2.1",
     "node-uuid": "^1.4.7",
     "require": "^2.4.20",
+    "uuid": "^3.0.1",
     "winston": "^2.2.0"
   },
   "author": "Bryan Lee",
