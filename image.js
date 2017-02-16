@@ -13,7 +13,7 @@ router.put("/",  (req, res) => {
 	req.on("end", function () {
 		const filename = uuidV4();
 		fs.writeFile(`./public/tmp/charts/${filename}.jpeg`, data, "base64", function (error) {
-			const url = `https://startertech-line-integration.herokuapp.com/tmp/charts/${filename}.png`;
+			const url = `https://startertech-line-integration.herokuapp.com/tmp/charts/${filename}.jpeg`;
 			res.status(200).send(url);
 			res.end(url);
 		});
