@@ -16,7 +16,7 @@ function sendMessage(channel, message) {
 }
 
 function sendMessageToLine(message) {
-	fetch("http://52.230.18.236:3000/api/social/line/message", {
+	fetch("http://ec2-13-113-75-73.ap-northeast-1.compute.amazonaws.com:3000/api/social/line/message", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -31,7 +31,7 @@ function sendMessageToLine(message) {
     });
 }
 function sendMessageToFB(message) {
-	fetch("http://52.230.18.236:3000/api/social/fb/message", {
+	fetch("http://ec2-13-113-75-73.ap-northeast-1.compute.amazonaws.com:3000/api/social/fb/message", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
