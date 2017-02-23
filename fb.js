@@ -18,73 +18,64 @@ router.get("/webhook", (req, res) => {
 });
 
 router.post('/webhook', function (req, res) {
-  var data = req.body;
+	var data = req.body;
 
-  // Make sure this is a page subscription
-  if (data.object === 'page') {
-	  logger.info("data", data);
-    // Iterate over each entry - there may be multiple if batched
-    data.entry.forEach(function(entry) {
-      var pageID = entry.id;
-      var timeOfEvent = entry.time;
+	if (data.object === 'page') {
+		data.entry.forEach(function(entry) {
+			var pageID = entry.id;
+			var userProfileMap = {};
+			const userProfilePromises = entry.messaging.reduce((reduced, event) => {
+				const userId = event.sender.id;
+				if (!userProfileMap[userId]) {
+					userProfileMap[userId] = reduced.length;
+					const promise = fetch("https://graph.facebook.com/v2.6/" + userId + "?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=" + PAGE_ACCESS_TOKEN, {
+						method: "GET"
+					})
+					.then(function (_res) {
+						return _res.json();
+					});
+					reduced.push(promise);
+				}
+				return reduced;
+			}, []);
 
-      // Iterate over each messaging event
-      entry.messaging.forEach(function(event) {
-        if (event.message) {
-          receivedMessage(event);
-        } else {
-          console.log("Webhook received unknown event: ", event);
-        }
-      });
-    });
+			Promise.all(userProfilePromises)
+			.then((userProfiles) => {
+				const length = entry.messaging.length;
+				for (let i = 0; i < length; i++) {
+					entry.messaging[i].client = userProfiles[userProfileMap[entry.messaging[i].sender.id]];
+				}
 
-    // Assume all went well.
-    //
-    // You must send back a 200, within 20 seconds, to let us know
-    // you've successfully received the callback. Otherwise, the request
-    // will time out and we will keep trying to resend.
-    res.sendStatus(200);
-  }
+				entry.messaging.forEach(function(event) {
+					if (event.message) {
+						receivedMessage(event);
+					} else {
+						console.log("Webhook received unknown event: ", event);
+					}
+				});
+			});
+		});
+
+    	res.sendStatus(200);
+  	}
 });
 
 function receivedMessage(event) {
-  // Putting a stub for now, we'll expand it in the following steps
-  logger.info("Message data: ", event.message);
+	// Putting a stub for now, we'll expand it in the following steps
+	logger.info("Message data: ", event.message);
 
-  var senderID = event.sender.id;
-  var recipientID = event.recipient.id;
-  var timeOfMessage = event.timestamp;
-  var message = event.message;
+	var senderID = event.sender.id;
+	var recipientID = event.recipient.id;
+	var timeOfMessage = event.timestamp;
+	var message = event.message;
 
-  logger.info("Received message for user %d and page %d at %d with message:",
-    senderID, recipientID, timeOfMessage);
-  logger.info(JSON.stringify(message));
+	logger.info("Received message for user %d and page %d at %d with message:", senderID, recipientID, timeOfMessage);
+	logger.info(JSON.stringify(message));
 
-  var messageId = message.mid;
-
-  var messageText = message.text;
-  var messageAttachments = message.attachments;
-
-  message.userId = senderID;
-  message.type = "text";
-  message.content = message.text;
-  sendMessage("fb", message);
-
-  // if (messageText) {
-  //
-  //   // If we receive a text message, check to see if it matches a keyword
-  //   // and send back the example. Otherwise, just echo the text we received.
-  //   switch (messageText) {
-  //     case 'generic':
-  //       sendGenericMessage(senderID);
-  //       break;
-  //
-  //     default:
-  //       sendTextMessage(senderID, messageText);
-  //   }
-  // } else if (messageAttachments) {
-  //   sendTextMessage(senderID, "Message with attachment received");
-  // }
+	message.userId = senderID;
+	message.type = "text";
+	message.content = message.text;
+	sendMessage("fb", message);
 }
 
 function sendGenericMessage(recipientId, messageText) {
