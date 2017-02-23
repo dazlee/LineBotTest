@@ -22,7 +22,7 @@ router.post('/webhook', function (req, res) {
 
   // Make sure this is a page subscription
   if (data.object === 'page') {
-
+	  logger.info("data", data);
     // Iterate over each entry - there may be multiple if batched
     data.entry.forEach(function(entry) {
       var pageID = entry.id;
